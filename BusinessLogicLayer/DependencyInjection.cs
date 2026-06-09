@@ -1,3 +1,4 @@
+using BusinessLogicLayer.Mappers;
 using BusinessLogicLayer.Validators;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,9 +11,7 @@ public static class DependencyInjection
     {
         //Add Data Access layer services into the Ioc container 
         services.AddValidatorsFromAssemblyContaining<OrderAddRequestValidator>();
-        services.AddValidatorsFromAssemblyContaining<OrderItemAddRequestValidator>();
-        services.AddValidatorsFromAssemblyContaining<OrderUpdateRequestValidator>();
-        services.AddValidatorsFromAssemblyContaining<OrderItemUpdateRequestValidator>();
+        services.AddAutoMapper(cfg => { }, typeof(OrderAddRequestToOrderMappingProfile).Assembly);
         return services;
     }
 }
