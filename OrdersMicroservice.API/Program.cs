@@ -30,14 +30,20 @@ builder.Services.AddCors(options =>
 builder.Services.AddTransient<IUsersMicroservicePolicies, UsersMicroservicePolicies>();
 
 builder.Services.AddHttpClient<UsersMicroserviceClient>(client =>
-{
-    client.BaseAddress =new Uri($"http://{builder.Configuration["UsersMicroserviceName"]}:{builder.Configuration["UsersMicroservicePort"]}");
-}).AddPolicyHandler(
-    builder.Services.BuildServiceProvider().GetRequiredService<IUsersMicroservicePolicies>().GetRetryPolicies());
-
+    {
+        client.BaseAddress =
+            new Uri(
+                $"http://{builder.Configuration["UsersMicroserviceName"]}:{builder.Configuration["UsersMicroservicePort"]}");
+    }).AddPolicyHandler(
+        builder.Services.BuildServiceProvider().GetRequiredService<IUsersMicroservicePolicies>().GetRetryPolicies())
+    .AddPolicyHandler(
+        builder.Services.BuildServiceProvider().GetRequiredService<IUsersMicroservicePolicies>()
+            .GetCircuitBreakerPolicies());
 builder.Services.AddHttpClient<ProductsMicroserviceClient>(client =>
 {
-    client.BaseAddress =new Uri($"http://{builder.Configuration["ProductsMicroserviceName"]}:{builder.Configuration["ProductsMicroservicePort"]}");
+    client.BaseAddress =
+        new Uri(
+            $"http://{builder.Configuration["ProductsMicroserviceName"]}:{builder.Configuration["ProductsMicroservicePort"]}");
 });
 
 var app = builder.Build();
