@@ -20,9 +20,14 @@ public class UsersMicroserviceClient(HttpClient httpClient)
             }
             else
             {
-                throw new HttpRequestException($"Http request failed with the status code {response.StatusCode}");
+                //throw new HttpRequestException($"Http request failed with the status code {response.StatusCode}");
+                return new UserDTO(PersonName: "Temporarily Unavailable",
+                    Email: "Temporarily Unavailable",
+                    Gender: "Temporarily Unavailable",
+                    UserID: Guid.Empty);
             }
         }
+
         UserDTO? user = await response.Content.ReadFromJsonAsync<UserDTO>();
         if (user is null)
             throw new ArgumentException("Invalid user ID");

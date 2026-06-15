@@ -4,7 +4,6 @@ using BusinessLogicLayer.Policies;
 using DataAccessLayer;
 using FluentValidation.AspNetCore;
 using OrdersMicroservice.API.Middleware;
-using Polly;
 
 var builder = WebApplication.CreateBuilder(args);
 
