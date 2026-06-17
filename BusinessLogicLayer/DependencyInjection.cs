@@ -15,6 +15,11 @@ public static class DependencyInjection
         services.AddValidatorsFromAssemblyContaining<OrderAddRequestValidator>();
         services.AddAutoMapper(cfg => { }, typeof(OrderAddRequestToOrderMappingProfile).Assembly);
         services.AddScoped<IOrdersService, OrdersService>();
+        services.AddStackExchangeRedisCache(options =>
+        {
+            options.Configuration = "localhost:6379"; // Adjust as needed
+            options.InstanceName = "OrderServiceCache:";
+        });
         return services;
     }
 }
