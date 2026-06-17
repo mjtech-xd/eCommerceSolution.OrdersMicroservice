@@ -47,6 +47,8 @@ public class OrderRepository : IOrdersRepository
         if (existingOrder is null)
             return null;
         ReplaceOneResult replaceOneResult = await _orders.ReplaceOneAsync(filter, order);
+        if (replaceOneResult.ModifiedCount == 0)
+            return null;
         return order;
     }
 
